@@ -335,10 +335,8 @@ func (c *conn) Send(cmd string, args ...interface{}) error {
 }
 
 func (c *conn) FlushBuffer() error {
-	c.pending = 0
-	var i int
-	for i = 0; i < c.br.Buffered(); i++ {
-		c.br.ReadByte()
+	for c.pending > 0 {
+		c.Receive()
 	}
 	return nil
 }
