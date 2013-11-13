@@ -39,6 +39,9 @@ type Conn interface {
 	// Flush flushes the output buffer to the Redis server.
 	Flush() error
 
+	// Flushes the incomming buffer
+	FlushBuffer() error
+
 	// Receive receives a single reply from the Redis server
 	Receive() (reply interface{}, err error)
 }

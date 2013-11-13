@@ -283,6 +283,13 @@ func (c *pooledConnection) Flush() error {
 	return c.c.Flush()
 }
 
+func (c *pooledConnection) FlushBuffer() error {
+	if err := c.get(); err != nil {
+		return err
+	}
+	return c.c.FlushBuffer()
+}
+
 func (c *pooledConnection) Receive() (reply interface{}, err error) {
 	if err := c.get(); err != nil {
 		return nil, err
