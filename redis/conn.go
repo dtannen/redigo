@@ -334,6 +334,15 @@ func (c *conn) Send(cmd string, args ...interface{}) error {
 	return nil
 }
 
+func (c *conn) FlushBuffer() error {
+	c.pending = 0
+	var i int
+	for i = 0; i < c.br.Buffered(); i++ {
+		c.br.ReadByte()
+	}
+	return nil
+}
+
 func (c *conn) Flush() error {
 	if c.writeTimeout != 0 {
 		c.conn.SetWriteDeadline(time.Now().Add(c.writeTimeout))
